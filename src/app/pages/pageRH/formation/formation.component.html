@@ -1,0 +1,178 @@
+
+ 
+<div class="container" id="main-container">
+    <button *ngIf="role=== 'ADMIN'"  type="button" class="btn btn-outline-primary me-2" data-toggle="modal" data-target="#addEmployeeModal" >Ajouter nouveau</button>
+ <table class="table table-striped">
+     <thead>
+       <tr>
+        <th scope="col">id</th>
+         <th scope="col">Nom Formation</th>
+         <th scope="col">Debut Formation</th>
+         <th scope="col">Fin Formation</th>
+         <th scope="col">Secteur Formation</th>
+         <th scope="col">Lieu  Formation</th>
+        <th scope="col">Instructeur</th> 
+       </tr>
+     </thead>
+     <tbody>
+       <tr *ngFor="let Dpts of departemList " class="col-md-6 col-xl-5">
+        <td>{{Dpts.idforma}}</td>
+        <td>{{Dpts.nomformation}}</td>
+        <td>{{Dpts.debuformation | date:"dd/MM/yyyy"}}</td>
+        <td>{{Dpts.finformation | date:"dd/MM/yyyy"}}</td>
+        <td>{{Dpts.secteurformation}}</td>
+        <td>{{Dpts.lieuformation}}</td>
+        <td>{{Dpts.instructeur}}</td>
+         
+       
+    
+          <button *ngIf="role=== 'ADMIN'"  type="button"   class="btn btn-outline-primary me-2" data-toggle="modal" data-target="#editDpt" (click)="editDpt(Dpts.idforma)" >Edit</button>
+          <button *ngIf="role=== 'ADMIN'"  type="button"    (click)="deletedepartement(Dpts.idforma)"  class="btn btn-outline-danger" >supprimer</button>
+    
+  
+        </tr>
+       
+       
+ <!--(click)="deleteEmployee(employee)" -->
+        
+   </table>
+ </div>
+ 
+ 
+ 
+ 
+ 
+ 
+ <!-- Add Employee Modal -->
+ <div class="modal fade" id="addEmployeeModal" tabindex="-1" role="dialog" aria-labelledby="addEmployeeModalLabel" aria-hidden="true">
+   <div class="modal-dialog" role="document">
+     <div class="modal-content">
+        <div class="modal-header">
+           <h5 class="modal-title" id="addEmployeeModalLabel">ajouter Employee</h5>
+           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+           <span aria-hidden="true">&times;</span>
+           </button>
+        </div>
+        <div class="modal-body">
+          <form [formGroup]="departFormGroup">
+          
+             
+            <div class="mb-3">
+                <label for="dpt" class="form-label">Nom Formation </label>
+                <input type="text" formControlName="nomformation" class="form-control" id="nomformation" aria-describedby="nomformation">
+              </div>
+
+              <div class="mb-3">
+                <label for="dpt" class="form-label">Date debut formation </label>
+                <input type="date" formControlName="debuformation" class="form-control" id="debuformation" aria-describedby="debuformation">
+              </div>
+
+              <div class="mb-3">
+                <label for="dpt" class="form-label">Date fin formation </label>
+                <input type="date" formControlName="finformation" class="form-control" id="finformation" aria-describedby="finformation">
+              </div>
+
+              <div class="mb-3">
+                <label for="dpt" class="form-label">Secteur formation</label>
+                <select class="form-control"  name="secteurformation" formControlName="secteurformation">
+                    <option value="1"> INFORMATIQUE </option>
+                    <option value="2"> SMS </option>
+                    <option value="3"> GESTION </option>
+                </select>
+              </div>
+              
+
+              <div class="mb-3">
+                <label for="dpt" class="form-label">Lieu formation </label>
+                <input type="text" formControlName="lieuformation" class="form-control" id="lieuformation" aria-describedby="lieuformation">
+              </div>
+
+              <div class="mb-3">
+                <label for="dpt" class="form-label">Instructeur </label>
+                <input type="text" formControlName="instructeur" class="form-control" id="instructeur" aria-describedby="instructeur">
+              </div>
+             <!-- <div class="form-group">
+                <select multiple name="countries" [(ngModel)]="selectedEmployee" class="form-control form-control-user">
+                    <option *ngFor="let emp of employees" [ngValue]="emp.id">
+                      {{ emp.matricule}}
+                    </option>
+                  </select>
+                    </div>-->
+                    <div class="mb-3">
+                        <label for="dpt" class="form-label">Employe </label>
+                        <select class="form-control" formControlName="idempls" multiple>
+                          <option *ngFor="let emp of employees" [value]="emp.id">{{ emp.matricule}}</option>
+                        </select>
+                     </div>
+                     
+               <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="adddpt()">ajouter formation</button>
+              </div>
+           </form>
+ 
+        </div>
+     </div>
+   </div>
+   </div>
+ 
+   <div class="modal fade" id="editDpt" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Edit employé</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+ 
+          <form [formGroup]="departFormGroup2">
+             
+            
+                <div class="mb-3">
+                    <label for="dpt" class="form-label">Nom Formation </label>
+                    <input type="text" formControlName="nomformation" class="form-control" id="nomformation" aria-describedby="nomformation">
+                  </div>
+    
+                  <div class="mb-3">
+                    <label for="dpt" class="form-label">Date debut formation </label>
+                    <input type="text" formControlName="debuformation" class="form-control" id="debuformation" aria-describedby="debuformation">
+                  </div>
+    
+                  <div class="mb-3">
+                    <label for="dpt" class="form-label">Date fin formation </label>
+                    <input type="text" formControlName="finformation" class="form-control" id="finformation" aria-describedby="finformation">
+                  </div>
+    
+                  <div class="mb-3">
+                    <label for="dpt" class="form-label">Secteur formation</label>
+                    <input type="text" formControlName="secteurformation" class="form-control" id="secteurformation" aria-describedby="secteurformation">
+                  </div>
+    
+                  <div class="mb-3">
+                    <label for="dpt" class="form-label">Lieu formation </label>
+                    <input type="text" formControlName="lieuformation" class="form-control" id="lieuformation" aria-describedby="lieuformation">
+                  </div>
+    
+                  <div class="mb-3">
+                    <label for="dpt" class="form-label">Instructeur </label>
+                    <input type="text" formControlName="instructeur" class="form-control" id="instructeur" aria-describedby="instructeur">
+                  </div>
+                  <div class="mb-3">
+                    <label for="dpt" class="form-label">Employe </label>
+                    <select class="form-control" formControlName="idempls" multiple>
+                      <option *ngFor="let emp of employees" [value]="emp.id">{{ emp.matricule}}</option>
+                    </select>
+                 </div>
+                 
+                
+                
+                 <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    
+                  </div>
+              </form>
+ 
+        </div>
+      </div>
+    </div>
+  </div>

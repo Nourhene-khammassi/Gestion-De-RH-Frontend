@@ -1,0 +1,240 @@
+
+<div class="container" id="main-container">
+     <button type="button" class="btn btn-outline-primary me-2" data-toggle="modal" data-target="#addEmployeeModal" >Ajouter nouveau</button> 
+ <table class="table table-striped">
+     <thead>
+       <tr>
+         <th scope="col">id</th>
+         <th scope="col">fullname</th>
+         <th scope="col">email</th>
+         <th scope="col">date.Ne</th>
+         <th scope="col">date.emb</th>
+         <th scope="col">sexeempl</th>
+         <th scope="col">grade</th>
+         <th scope="col">salaire</th>
+         <th scope="col">dpt</th>   
+         <th scope="col">action</th>
+       </tr>
+     </thead>
+     <tbody>
+       <tr *ngFor="let employ of entityList" class="col-md-9 col-xl-5">
+        
+        <td>{{employ.id}}</td>
+         <td>{{employ.fullname}}</td>
+         <td>{{employ.email}}</td>
+         <td>{{employ.datenaissance | date:"dd/MM/yyyy"}}</td>
+         <td>{{employ.dateembauche | date:"dd/MM/yyyy"}}</td>
+         <td>{{employ.sexeempl}}</td>
+         <td>{{employ.gradeempl}}</td>
+         <td>{{employ.salaire}}</td>
+         <td>{{employ.departementdto.namedpt}}
+         <td>
+         <button type="button"   class="btn btn-outline-primary me-2" data-toggle="modal" data-target="#editempl" (click)="getentitybyid(employ.id)" >E</button>
+         <button type="button"    (click)="deleteemployee(employ.id)"  class="btn btn-outline-danger me-2" >D</button>
+         <button  *ngIf="role=== 'ADMIN'" type="button"   class="btn btn-outline-primary me-2" data-toggle="modal" data-target="#listeempl" (click)="getlesconge(employ.id)" >co</button>
+        </td>
+        </tr>
+       
+ 
+        
+   </table>
+ </div>
+ 
+ 
+ 
+ 
+ 
+ 
+ <!-- Add Employee Modal -->
+ <div class="modal fade" id="addEmployeeModal" tabindex="-1" role="dialog" aria-labelledby="addEmployeeModalLabel" aria-hidden="true">
+   <div class="modal-dialog" role="document">
+     <div class="modal-content">
+        <div class="modal-header">
+           <h5 class="modal-title" id="addEmployeeModalLabel">Add Employee</h5>
+           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+           <span aria-hidden="true">&times;</span>
+           </button>
+        </div>
+        
+     
+
+        <div class="modal-body">
+        
+          <form [formGroup]="entityFormGroup">
+           
+            <div class="mb-3">
+                <label for="dpt" class="form-label">fullname </label>
+                <input type="text" formControlName="fullname" class="form-control" id="fullname" aria-describedby="fullname">
+              </div>
+              
+              <div class="mb-3">
+                <label for="dpt" class="form-label">email </label>
+                <input type="text" formControlName="email" class="form-control" id="email" aria-describedby="email">
+              </div>
+
+              <div class="mb-3">
+                <label for="dpt" class="form-label">datenaissance</label>
+                <input type="text" formControlName="datenaissance" class="form-control" id="datenaissance" aria-describedby="datenaissance">
+              </div>
+
+              <div class="mb-3">
+                <label for="dpt" class="form-label">dateembauche </label>
+                <input type="text" formControlName="dateembauche" class="form-control" id="dateembauche" aria-describedby="dateembauche">
+              </div>
+
+              <div class="mb-3">
+                <label for="sexeempl" class="form-label">sexeempl </label>
+                <input type="text" formControlName="sexeempl" class="form-control" id="sexeempl" aria-describedby="sexeempl">
+              </div>
+              
+              <div class="mb-3">
+                <label for="sexeempl" class="form-label">gradeempl </label>
+                <input type="text" formControlName="gradeempl" class="form-control" id="gradeempl" aria-describedby="gradeempl">
+              </div>
+              <div class="mb-3">
+                <label for="sexeempl" class="form-label">salaire </label>
+                <input type="text" formControlName="salaire" class="form-control" id="salaire" aria-describedby="salaire">
+              </div>
+              
+            
+              
+              
+              
+              
+              
+              <div class="modal-footer">
+               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+               
+             </div>
+          </form>
+        </div>
+     </div>
+   </div>
+   </div>
+ 
+   <div class="modal fade" id="editempl" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Edit employee details</h5>
+          <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+ 
+          <form [formGroup]="entityFormGroup2">
+           
+            <div class="mb-3">
+                <label for="dpt" class="form-label">fullname </label>
+                <input type="text" formControlName="fullname" class="form-control" id="fullname" aria-describedby="fullname">
+              </div>
+              
+              <div class="mb-3">
+                <label for="dpt" class="form-label">email </label>
+                <input type="text" formControlName="email" class="form-control" id="email" aria-describedby="email">
+              </div>
+
+              <div class="mb-3">
+                <label for="dpt" class="form-label">dateembauche </label>
+                <input type="text" formControlName="dateembauche" class="form-control" id="dateembauche" aria-describedby="dateembauche">
+              </div>
+
+              <div class="mb-3">
+                <label for="dpt" class="form-label">dateembauche </label>
+                <input type="text" formControlName="dateembauche" class="form-control" id="dateembauche" aria-describedby="dateembauche">
+              </div>
+
+              <div class="mb-3">
+                <label for="sexeempl" class="form-label">sexeempl </label>
+                <input type="text" formControlName="sexeempl" class="form-control" id="sexeempl" aria-describedby="sexeempl">
+              </div>
+              
+              <div class="mb-3">
+                <label for="sexeempl" class="form-label">gradeempl </label>
+                <input type="text" formControlName="gradeempl" class="form-control" id="gradeempl" aria-describedby="gradeempl">
+              </div>
+              <div class="mb-3">
+                <label for="sexeempl" class="form-label">salaire </label>
+                <input type="text" formControlName="salaire" class="form-control" id="salaire" aria-describedby="salaire">
+              </div>
+              
+            
+              
+              
+              
+              
+              
+              <div class="modal-footer">
+               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+               
+             </div>
+          </form>
+          
+ 
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="listeempl" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+      <div class="modal-content modal-xl"  >
+        <div class="modal-header modal-xl">
+          <h5 class="modal-title" id="exampleModalLabel">Edit employee details</h5>
+          <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+ 
+          <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">id</th>
+                    <th scope="col">debut Congé</th>
+                    <th scope="col">fin Congé</th>
+                    <th scope="col">nbr de jour</th>
+                    <th scope="col">type Congé</th>
+                    <th scope="col">Cause</th>
+                    <th scope="col">Remplacent</th>
+                    <th scope="col">Etat de conge</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let Dpts of emplList " class="col-md-6 col-xl-5">
+                    <td>{{Dpts.idconge}}</td>
+                    <td>{{Dpts.debuconge | date:"dd/MM/yyyy"}}</td>
+                    <td>{{Dpts.finconge | date:"dd/MM/yyyy" }}</td>
+                    <td>{{Dpts.nbrjours}}</td>
+                    <td>{{Dpts.typeconge}}</td>
+                    <td>{{Dpts.cause}}</td>
+                    <td>{{Dpts.remplacent}}</td>
+                    
+                    <td>
+                     
+                      <i *ngIf="Dpts.isvalide == false" class="fas fa-circle text-danger me-1">refuse</i>
+                      <i *ngIf="Dpts.isvalide == true" class="fas fa-circle text-success me-1">accepte</i>
+                    </td>
+    
+    
+    
+    
+                    
+    
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="validationcongeS(Dpts.idconge,true)">validation
+                      conge</button>
+    
+                  <!--  <button type="button" class="btn btn-outline-primary me-2" data-toggle="modal" data-target="#editDpt"
+                        >Edit</button>-->
+                    
+                       
+    
+    
+                </tr>
+    
+    
+                <!--    (click)="editDpt(Dpts.idconge)(click)="deleteEmployee(employee)" -->
+    
+        </table>
+ 
+        </div>
+      </div>
+    </div>
+  </div>

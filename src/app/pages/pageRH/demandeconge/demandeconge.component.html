@@ -1,0 +1,185 @@
+<div class="container" id="main-container">
+    <button type="button" class="btn btn-outline-primary me-2" data-toggle="modal" data-target="#addEmployeeModal">Ajouter nouveau
+        </button>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">id</th>
+                <th scope="col">debut Congé</th>
+                <th scope="col">fin Congé</th>
+                <th scope="col">nbr de jour</th>
+                <th scope="col">type Congé</th>
+                <th scope="col">Cause</th>
+                <th scope="col">Remplacent</th>
+                <th scope="col">etat de conge</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let Dpts of departemList " class="col-md-6 col-xl-5">
+                <td>{{Dpts.idconge}}</td>
+                <td>{{Dpts.debuconge | date:"dd/MM/yyyy"}}</td>
+                <td>{{Dpts.finconge | date:"dd/MM/yyyy" }}</td>
+                <td>{{Dpts.nbrjours}}</td>
+                <td>{{Dpts.typeconge}}</td>
+                <td>{{Dpts.cause}}</td>
+                <td>{{Dpts.remplacent}}</td>
+                <td>
+                     
+                    <i *ngIf="Dpts.isvalide == false" class="fas fa-circle text-danger me-1">refuse</i>
+                    <i *ngIf="Dpts.isvalide == true" class="fas fa-circle text-success me-1">accepte</i>
+                  </td>
+
+
+
+
+
+
+
+
+<button type="button" class="btn btn-outline-primary me-2" data-toggle="modal" data-target="#editDpt"
+                    (click)="editDpt(Dpts.idconge)">Edit</button>
+                <button type="button" (click)="deletedepartement(Dpts.idconge)"
+                    class="btn btn-outline-danger">supprimer</button>
+
+
+            </tr>
+
+
+            <!--(click)="deleteEmployee(employee)" -->
+
+    </table>
+</div>
+
+
+
+
+
+
+<!-- Add Employee Modal -->
+<div class="modal fade" id="addEmployeeModal" tabindex="-1" role="dialog" aria-labelledby="addEmployeeModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addEmployeeModalLabel">Ajouter Congé</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="departFormGroup">
+
+
+
+
+                    <div class="mb-3">
+                        <label for="debuconge" class="form-label">debut Congé </label>
+                        <input type="date" formControlName="debuconge" class="form-control" id="debuconge"
+                            aria-describedby="debuconge">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="finconge" class="form-label">fin Congé </label>
+                        <input type="date" formControlName="finconge" class="form-control" id="finconge"
+                            aria-describedby="finconge">
+                    </div>
+
+
+
+
+                    <div class="mb-3">
+                        <label for="nbrjours" class="form-label">nombre de jours </label>
+                        <input type="number" formControlName="nbrjours" class="form-control" id="nbrjours"                            aria-describedby="nbrjours">
+                    </div>
+
+                    <select class="form-control"  name="typeconge" formControlName="typeconge">
+                        <option value="1"> ANNUELLE </option>
+                        <option value="2"> MALADIE </option>
+                        <option value="3"> MATERNITE </option>
+                    </select>
+                    
+                    <div class="mb-3">
+                        <label for="cause" class="form-label">Cause </label>
+                        <input type="text" formControlName="cause" class="form-control" id="cause"
+                            aria-describedby="cause">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="remplacent" class="form-label">Remplacent </label>
+                        <input type="text" formControlName="remplacent" class="form-control" id="remplacent"
+                            aria-describedby="remplacent">
+                    </div>
+
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="adddpt()">ajouter
+                            conge</button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="editDpt" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Edit employee details</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+
+                <form [formGroup]="departFormGroup2">
+
+                    <div class="mb-3">
+                        <label for="debuconge" class="form-label">debut Congé </label>
+                        <input type="text" formControlName="debuconge" class="form-control" id="debuconge"
+                            aria-describedby="debuconge">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="finconge" class="form-label">fin conge </label>
+                        <input type="text" formControlName="finconge" class="form-control" id="finconge"
+                            aria-describedby="finconge">
+                    </div>
+
+
+
+                    <div class="mb-3">
+                        <label for="nbrjours" class="form-label">nombre de jours </label>
+                        <input type="text" formControlName="nbrjours" class="form-control" id="nbrjours"
+                            aria-describedby="nbrjours">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="typeconge" class="form-label">type conge </label>
+                        <input type="text" formControlName="typeconge" class="form-control" id="typeconge"
+                            aria-describedby="typeconge">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="cause" class="form-label">cause </label>
+                        <input type="text" formControlName="cause" class="form-control" id="cause"
+                            aria-describedby="cause">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="remplacent" class="form-label">remplacent </label>
+                        <input type="text" formControlName="remplacent" class="form-control" id="remplacent"
+                            aria-describedby="remplacent">
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="updateconge()">update
+                            conge</button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
